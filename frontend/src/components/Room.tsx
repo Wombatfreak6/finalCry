@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { Socket, io } from "socket.io-client";
 
 // Use backend URL from env if provided, otherwise use the current page host.
 // This allows opening the app from another device on the same network without code changes.
 const BACKEND_HOST = (import.meta as any).env?.VITE_BACKEND_URL || window.location.hostname;
-const URL = `http://${BACKEND_HOST}:3000`;
+const URL = BACKEND_HOST.startsWith('http') ? BACKEND_HOST : `http://${BACKEND_HOST}:3000`;
 
 export const Room = ({
     name,
@@ -18,17 +17,40 @@ export const Room = ({
     localAudioTrack: MediaStreamTrack | null,
     localVideoTrack: MediaStreamTrack | null,
 }) => {
-    const [searchParams, setSearchParams] = useSearchParams();
     const [lobby, setLobby] = useState(true);
     const [socket, setSocket] = useState<null | Socket>(null);
     const [sendingPc, setSendingPc] = useState<null | RTCPeerConnection>(null);
     const [receivingPc, setReceivingPc] = useState<null | RTCPeerConnection>(null);
-    const [remoteVideoTrack, setRemoteVideoTrack] = useState<MediaStreamTrack | null>(null);
-    const [remoteAudioTrack, setRemoteAudioTrack] = useState<MediaStreamTrack | null>(null);
-    const [remoteMediaStream, setRemoteMediaStream] = useState<MediaStream | null>(null);
     const [currentRoomId, setCurrentRoomId] = useState<string | null>(null);
-    const remoteVideoRef = useRef<HTMLVideoElement>();
-    const localVideoRef = useRef<HTMLVideoElement>();
+    const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
+    const localVideoRef = useRef<HTMLVideoElement | null>(null);
+
+    const handleRemoteTrack = (event: RTCTrackEvent) => {
+        const videoElement = remoteVideoRef.current;
+        if (!videoElement) {
+            return;
+        }
+
+        const incomingStream = event.streams?.[0];
+        if (incomingStream && videoElement.srcObject !== incomingStream) {
+            videoElement.srcObject = incomingStream;
+        } else if (!incomingStream) {
+            const currentStream = (videoElement.srcObject as MediaStream | null) ?? new MediaStream();
+            const alreadyAdded = currentStream.getTracks().some(track => track.id === event.track.id);
+            if (!alreadyAdded) {
+                currentStream.addTrack(event.track);
+            }
+            if (videoElement.srcObject !== currentStream) {
+                videoElement.srcObject = currentStream;
+            }
+        }
+
+        videoElement.play().catch(err => {
+            if (err.name !== "AbortError") {
+                console.error("Failed to start remote video", err);
+            }
+        });
+    };
 
     useEffect(() => {
         const socket = io(URL);
@@ -52,16 +74,14 @@ export const Room = ({
             const pc = new RTCPeerConnection();
 
             setSendingPc(pc);
+            const localStream = new MediaStream();
             if (localVideoTrack) {
-                console.error("added tack");
-                console.log(localVideoTrack)
-                pc.addTrack(localVideoTrack)
+                localStream.addTrack(localVideoTrack);
             }
             if (localAudioTrack) {
-                console.error("added tack");
-                console.log(localAudioTrack)
-                pc.addTrack(localAudioTrack)
+                localStream.addTrack(localAudioTrack);
             }
+            localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
 
             pc.onicecandidate = async (e) => {
                 console.log("receiving ice candidate locally");
@@ -84,6 +104,8 @@ export const Room = ({
                     roomId
                 })
             }
+
+            pc.ontrack = handleRemoteTrack;
         });
 
         socket.on("offer", async ({roomId, sdp: remoteSdp}) => {
@@ -91,35 +113,21 @@ export const Room = ({
             setLobby(false);
             setCurrentRoomId(roomId);
             const pc = new RTCPeerConnection();
+            const localStream = new MediaStream();
+            if (localVideoTrack) {
+                localStream.addTrack(localVideoTrack);
+            }
+            if (localAudioTrack) {
+                localStream.addTrack(localAudioTrack);
+            }
+            localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
             pc.setRemoteDescription(remoteSdp)
             const sdp = await pc.createAnswer();
             //@ts-ignore
             pc.setLocalDescription(sdp)
-            const stream = new MediaStream();
-            if (remoteVideoRef.current) {
-                remoteVideoRef.current.srcObject = stream;
-            }
 
-            setRemoteMediaStream(stream);
-            // trickle ice 
             setReceivingPc(pc);
-            window.pcr = pc;
-            pc.ontrack = (e) => {
-                alert("ontrack");
-                // console.error("inside ontrack");
-                // const {track, type} = e;
-                // if (type == 'audio') {
-                //     // setRemoteAudioTrack(track);
-                //     // @ts-ignore
-                //     remoteVideoRef.current.srcObject.addTrack(track)
-                // } else {
-                //     // setRemoteVideoTrack(track);
-                //     // @ts-ignore
-                //     remoteVideoRef.current.srcObject.addTrack(track)
-                // }
-                // //@ts-ignore
-                // remoteVideoRef.current.play();
-            }
+            pc.ontrack = handleRemoteTrack;
 
             pc.onicecandidate = async (e) => {
                 if (!e.candidate) {
@@ -139,34 +147,6 @@ export const Room = ({
                 roomId,
                 sdp: sdp
             });
-            setTimeout(() => {
-                const track1 = pc.getTransceivers()[0].receiver.track
-                const track2 = pc.getTransceivers()[1].receiver.track
-                console.log(track1);
-                if (track1.kind === "video") {
-                    setRemoteAudioTrack(track2)
-                    setRemoteVideoTrack(track1)
-                } else {
-                    setRemoteAudioTrack(track1)
-                    setRemoteVideoTrack(track2)
-                }
-                //@ts-ignore
-                remoteVideoRef.current.srcObject.addTrack(track1)
-                //@ts-ignore
-                remoteVideoRef.current.srcObject.addTrack(track2)
-                //@ts-ignore
-                remoteVideoRef.current.play();
-                // if (type == 'audio') {
-                //     // setRemoteAudioTrack(track);
-                //     // @ts-ignore
-                //     remoteVideoRef.current.srcObject.addTrack(track)
-                // } else {
-                //     // setRemoteVideoTrack(track);
-                //     // @ts-ignore
-                //     remoteVideoRef.current.srcObject.addTrack(track)
-                // }
-                // //@ts-ignore
-            }, 5000)
         });
 
         socket.on("answer", ({roomId, sdp: remoteSdp}) => {
@@ -189,8 +169,6 @@ export const Room = ({
                 setReceivingPc(pc => {
                     if (!pc) {
                         console.error("receicng pc nout found")
-                    } else {
-                        console.error(pc.ontrack)
                     }
                     pc?.addIceCandidate(candidate)
                     return pc;
@@ -199,8 +177,6 @@ export const Room = ({
                 setSendingPc(pc => {
                     if (!pc) {
                         console.error("sending pc nout found")
-                    } else {
-                        // console.error(pc.ontrack)
                     }
                     pc?.addIceCandidate(candidate)
                     return pc;
@@ -212,13 +188,15 @@ export const Room = ({
     }, [name])
 
     useEffect(() => {
-        if (localVideoRef.current) {
-            if (localVideoTrack) {
-                localVideoRef.current.srcObject = new MediaStream([localVideoTrack]);
-                localVideoRef.current.play();
+        if (!localVideoRef.current || !localVideoTrack) return;
+
+        localVideoRef.current.srcObject = new MediaStream([localVideoTrack]);
+        localVideoRef.current.play().catch((err) => {
+            if (err.name !== "AbortError") {
+                console.error("Failed to start local video preview", err);
             }
-        }
-    }, [localVideoRef])
+        });
+    }, [localVideoTrack])
 
     const handleDisconnect = () => {
         if (socket && currentRoomId) {
@@ -246,6 +224,17 @@ export const Room = ({
         }
     };
 
+    const videoStyle: React.CSSProperties = {
+        width: '100%',
+        maxWidth: '420px',
+        aspectRatio: '4 / 3',
+        border: '2px solid #333',
+        borderRadius: '12px',
+        backgroundColor: '#000',
+        objectFit: 'cover',
+        boxShadow: '0 8px 20px rgba(0,0,0,0.25)'
+    };
+
     return <div style={{ padding: '20px', textAlign: 'center' }}>
         <h2>Hi {name}!</h2>
         <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -253,10 +242,9 @@ export const Room = ({
                 <h3>You</h3>
                 <video 
                     autoPlay 
-                    width={400} 
-                    height={300} 
+                    playsInline
                     ref={localVideoRef}
-                    style={{ border: '2px solid #333', borderRadius: '8px' }}
+                    style={videoStyle}
                     muted
                 />
             </div>
@@ -264,10 +252,9 @@ export const Room = ({
                 <h3>{lobby ? 'Waiting for match...' : 'Connected'}</h3>
                 <video 
                     autoPlay 
-                    width={400} 
-                    height={300} 
+                    playsInline
                     ref={remoteVideoRef}
-                    style={{ border: '2px solid #333', borderRadius: '8px', backgroundColor: '#000' }}
+                    style={videoStyle}
                 />
             </div>
         </div>

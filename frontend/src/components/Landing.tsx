@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react"
-import { Link } from "react-router-dom";
 import { Room } from "./Room";
 
 const BACKEND_URL = (import.meta as any).env?.VITE_BACKEND_URL || `http://${window.location.hostname}:3000`;
@@ -29,8 +28,17 @@ export const Landing = () => {
             setLocalAudioTrack(audioTrack);
             setlocalVideoTrack(videoTrack);
             if (videoRef.current) {
+                // Stop any existing playback to prevent interruption
+                if (videoRef.current.srcObject) {
+                    const oldStream = videoRef.current.srcObject as MediaStream;
+                    oldStream.getTracks().forEach(track => track.stop());
+                }
                 videoRef.current.srcObject = new MediaStream([videoTrack])
-                videoRef.current.play().catch(err => console.error("Error playing video:", err));
+                videoRef.current.play().catch(err => {
+                    if (err.name !== 'AbortError') {
+                        console.error("Error playing video:", err);
+                    }
+                });
             }
         } catch (error) {
             console.error("Error accessing camera/microphone:", error);
@@ -43,10 +51,29 @@ export const Landing = () => {
     }, []);
 
     useEffect(() => {
-        if (videoRef.current && localVideoTrack) {
-            videoRef.current.srcObject = new MediaStream([localVideoTrack]);
-            videoRef.current.play().catch(err => console.error("Error playing video:", err));
+        if (!videoRef.current || !localVideoTrack) {
+            return;
         }
+
+        const currentStream = videoRef.current.srcObject as MediaStream | null;
+        const currentTrack = currentStream?.getVideoTracks()[0];
+
+        // Only stop the preview track if it's different from the incoming track.
+        if (currentTrack && currentTrack !== localVideoTrack) {
+            currentTrack.stop();
+        }
+
+        if (currentTrack !== localVideoTrack) {
+            videoRef.current.srcObject = new MediaStream([localVideoTrack]);
+        }
+
+        videoRef.current
+            .play()
+            .catch(err => {
+                if (err.name !== 'AbortError') {
+                    console.error("Error playing video:", err);
+                }
+            });
     }, [localVideoTrack, videoRef]);
 
     const verifyEmail = async () => {
@@ -57,6 +84,9 @@ export const Landing = () => {
 
         setLoading(true);
         setError("");
+
+        console.log('Backend URL:', BACKEND_URL);
+        console.log('Attempting to verify email:', email.trim());
 
         try {
             // Add timeout to prevent hanging
@@ -94,6 +124,12 @@ export const Landing = () => {
             setLoading(false);
         } catch (error: any) {
             console.error('Error verifying email:', error);
+            console.error('Error details:', {
+                name: error.name,
+                message: error.message,
+                stack: error.stack
+            });
+            
             if (error.name === 'AbortError') {
                 setError('Request timed out. Please check your connection and try again.');
             } else {
@@ -189,7 +225,8 @@ export const Landing = () => {
                                 }}
                             />
                             <p style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
-                                Only .edu, .edu.in, .ac.uk, .ac.in, and other college domains are accepted
+                                Only .edu, .edu.in, .ac.uk, .ac.in, and other college domains are accepted. 
+                                For testing, you can use test@test.test
                             </p>
                         </div>
                         <button 
