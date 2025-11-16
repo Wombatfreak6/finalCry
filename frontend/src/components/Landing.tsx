@@ -152,173 +152,108 @@ export const Landing = () => {
     };
 
     if (!joined) {
-        return <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center', 
-            justifyContent: 'center',
-            minHeight: '100vh',
-            padding: '20px',
-            backgroundColor: '#f5f5f5'
-        }}>
-            <h1 style={{ marginBottom: '30px', color: '#333' }}>College Omegle</h1>
-            <div style={{ 
-                backgroundColor: 'white', 
-                padding: '30px', 
-                borderRadius: '10px', 
-                boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                maxWidth: '500px',
-                width: '100%'
-            }}>
-                <div style={{ marginBottom: '20px' }}>
-                    <video 
-                        autoPlay 
-                        ref={videoRef}
-                        style={{ 
-                            width: '100%', 
-                            maxWidth: '400px', 
-                            height: '300px', 
-                            borderRadius: '8px',
-                            backgroundColor: '#000',
-                            border: '2px solid #333'
-                        }}
-                        muted
-                    ></video>
-                </div>
-
-                {error && (
-                    <div style={{
-                        padding: '10px',
-                        marginBottom: '20px',
-                        backgroundColor: '#ffebee',
-                        color: '#c62828',
-                        borderRadius: '5px',
-                        fontSize: '14px'
-                    }}>
-                        {error}
+        return (
+            <div className="landing-screen">
+                <div className="background-glow" />
+                <div className="landing-card">
+                    <div className="landing-header">
+                        <p className="tagline">campus-only vibes</p>
+                        <h1>College Omegle</h1>
+                        <p className="subhead">Meet students in seconds. Safe, real, instantly matched.</p>
                     </div>
-                )}
 
-                {step === 'email' && (
-                    <>
-                        <div style={{ marginBottom: '20px' }}>
-                            <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>
-                                Enter your college email:
+                    <div className="preview-panel">
+                        <span className="preview-label">Live preview</span>
+                        <div className="neon-outline preview-video">
+                            <video 
+                                autoPlay 
+                                ref={videoRef}
+                                className="video-frame"
+                                muted
+                            ></video>
+                        </div>
+                    </div>
+
+                    {error && (
+                        <div className="alert">
+                            {error}
+                        </div>
+                    )}
+
+                    {step === 'email' && (
+                        <div className="form-section">
+                            <label className="field-label">
+                                Enter your college email
                             </label>
                             <input 
                                 type="email" 
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="your.email@university.edu"
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    fontSize: '16px',
-                                    border: '2px solid #ddd',
-                                    borderRadius: '5px',
-                                    boxSizing: 'border-box'
-                                }}
+                                className="input-field"
                                 onKeyPress={(e) => {
                                     if (e.key === 'Enter' && email.trim()) {
                                         verifyEmail();
                                     }
                                 }}
                             />
-                            <p style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
-                                Only .edu, .edu.in, .ac.uk, .ac.in, and other college domains are accepted. 
+                            <p className="helper-text">
+                                Only .edu, .edu.in, .ac.uk, .ac.in domains are accepted.
                                 For testing, you can use test@test.test
                             </p>
+                            <button 
+                                onClick={verifyEmail}
+                                disabled={!email.trim() || loading}
+                                className="btn primary"
+                            >
+                                {loading ? 'Verifying...' : 'Continue'}
+                            </button>
                         </div>
-                        <button 
-                            onClick={verifyEmail}
-                            disabled={!email.trim() || loading}
-                            style={{
-                                width: '100%',
-                                padding: '12px',
-                                fontSize: '16px',
-                                backgroundColor: email.trim() && !loading ? '#4CAF50' : '#ccc',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '5px',
-                                cursor: email.trim() && !loading ? 'pointer' : 'not-allowed',
-                                fontWeight: 'bold'
-                            }}
-                        >
-                            {loading ? 'Verifying...' : 'Continue'}
-                        </button>
-                    </>
-                )}
+                    )}
 
-                {step === 'name' && (
-                    <>
-                        <div style={{ marginBottom: '20px' }}>
-                            <p style={{ marginBottom: '10px', color: '#4CAF50', fontWeight: 'bold' }}>
+                    {step === 'name' && (
+                        <div className="form-section">
+                            <p style={{ color: '#4ade80', fontWeight: 600 }}>
                                 ✓ Email verified: {verifiedEmail}
                             </p>
-                            <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>
-                                Enter your name:
+                            <label className="field-label">
+                                Enter your name
                             </label>
                             <input 
                                 type="text" 
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 placeholder="Your name"
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    fontSize: '16px',
-                                    border: '2px solid #ddd',
-                                    borderRadius: '5px',
-                                    boxSizing: 'border-box'
-                                }}
+                                className="input-field"
                                 onKeyPress={(e) => {
                                     if (e.key === 'Enter' && name.trim()) {
                                         handleStartChatting();
                                     }
                                 }}
                             />
+                            <div className="actions-row">
+                                <button 
+                                    onClick={() => {
+                                        setStep('email');
+                                        setError('');
+                                    }}
+                                    className="btn secondary"
+                                >
+                                    Back
+                                </button>
+                                <button 
+                                    onClick={handleStartChatting}
+                                    disabled={!name.trim()}
+                                    className="btn primary"
+                                >
+                                    Start Chatting
+                                </button>
+                            </div>
                         </div>
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                            <button 
-                                onClick={() => {
-                                    setStep('email');
-                                    setError('');
-                                }}
-                                style={{
-                                    flex: 1,
-                                    padding: '12px',
-                                    fontSize: '16px',
-                                    backgroundColor: '#f5f5f5',
-                                    color: '#333',
-                                    border: '1px solid #ddd',
-                                    borderRadius: '5px',
-                                    cursor: 'pointer'
-                                }}
-                            >
-                                Back
-                            </button>
-                            <button 
-                                onClick={handleStartChatting}
-                                disabled={!name.trim()}
-                                style={{
-                                    flex: 1,
-                                    padding: '12px',
-                                    fontSize: '16px',
-                                    backgroundColor: name.trim() ? '#4CAF50' : '#ccc',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '5px',
-                                    cursor: name.trim() ? 'pointer' : 'not-allowed',
-                                    fontWeight: 'bold'
-                                }}
-                            >
-                                Start Chatting
-                            </button>
-                        </div>
-                    </>
-                )}
+                    )}
+                </div>
             </div>
-        </div>
+        )
     }
 
     return <Room name={name} email={verifiedEmail || ''} localAudioTrack={localAudioTrack} localVideoTrack={localVideoTrack} />

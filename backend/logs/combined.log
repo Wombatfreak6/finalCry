@@ -358,3 +358,188 @@
 {"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 17:17:49"}
 {"level":"info","message":"User User (soh@adypu.edu.in) (qM95JG2tygaeHx7WAAAX) joined","service":"omegle-backend","timestamp":"2025-11-16 17:17:49"}
 {"level":"info","message":"Room 6 created between User and User","service":"omegle-backend","timestamp":"2025-11-16 17:17:49"}
+{"level":"info","message":"User disconnected: a5tqUjLEreXPpFvTAAAT","service":"omegle-backend","timestamp":"2025-11-16 17:28:21"}
+{"level":"info","message":"User disconnected: qM95JG2tygaeHx7WAAAX","service":"omegle-backend","timestamp":"2025-11-16 17:28:21"}
+{"level":"info","message":"Room 5 deleted","service":"omegle-backend","timestamp":"2025-11-16 17:28:21"}
+{"level":"info","message":"User a5tqUjLEreXPpFvTAAAT removed","service":"omegle-backend","timestamp":"2025-11-16 17:28:21"}
+{"level":"info","message":"Room 6 deleted","service":"omegle-backend","timestamp":"2025-11-16 17:28:21"}
+{"level":"info","message":"User qM95JG2tygaeHx7WAAAX removed","service":"omegle-backend","timestamp":"2025-11-16 17:28:21"}
+{"level":"info","message":"User disconnected: 6On6hDXx4TIYFBhhAAAZ","service":"omegle-backend","timestamp":"2025-11-16 17:34:12"}
+{"level":"info","message":"User 6On6hDXx4TIYFBhhAAAZ removed","service":"omegle-backend","timestamp":"2025-11-16 17:34:12"}
+{"level":"info","message":"User disconnected: bGVsSNSpCrVAXGylAAAV","service":"omegle-backend","timestamp":"2025-11-16 17:34:12"}
+{"level":"info","message":"User bGVsSNSpCrVAXGylAAAV removed","service":"omegle-backend","timestamp":"2025-11-16 17:34:12"}
+{"level":"info","message":"User connected: QObjHn0PQcvYeCSxAAAb","service":"omegle-backend","timestamp":"2025-11-16 17:34:13"}
+{"level":"info","message":"User connected: UOV6Vgkf13tgyB1bAAAd","service":"omegle-backend","timestamp":"2025-11-16 17:34:14"}
+{"level":"warn","message":"⚠️  MongoDB disconnected","service":"omegle-backend","timestamp":"2025-11-16 21:12:38"}
+{"level":"info","message":"User disconnected: UOV6Vgkf13tgyB1bAAAd","service":"omegle-backend","timestamp":"2025-11-16 21:12:43"}
+{"level":"info","message":"User UOV6Vgkf13tgyB1bAAAd removed","service":"omegle-backend","timestamp":"2025-11-16 21:12:43"}
+{"level":"info","message":"User disconnected: QObjHn0PQcvYeCSxAAAb","service":"omegle-backend","timestamp":"2025-11-16 21:12:43"}
+{"level":"info","message":"User QObjHn0PQcvYeCSxAAAb removed","service":"omegle-backend","timestamp":"2025-11-16 21:12:43"}
+{"level":"warn","message":"⚠️  MongoDB disconnected","service":"omegle-backend","timestamp":"2025-11-16 21:30:11"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 21:50:50"}
+{"level":"info","message":"🚀 Server listening on port 3000","service":"omegle-backend","timestamp":"2025-11-16 21:50:55"}
+{"level":"info","message":"📝 Environment: development","service":"omegle-backend","timestamp":"2025-11-16 21:50:55"}
+{"level":"info","message":"✅ Connected to MongoDB","service":"omegle-backend","timestamp":"2025-11-16 21:51:01"}
+{"level":"info","message":"User verified for son@adypu.edu.in (college email domain validated)","service":"omegle-backend","timestamp":"2025-11-16 21:51:24"}
+{"level":"info","message":"User connected: RtUP51dA8bOH3XB_AAAB","service":"omegle-backend","timestamp":"2025-11-16 21:51:25"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 21:51:26"}
+{"level":"info","message":"User User (son@adypu.edu.in) (RtUP51dA8bOH3XB_AAAB) joined","service":"omegle-backend","timestamp":"2025-11-16 21:51:26"}
+{"level":"warn","message":"Database not connected, using in-memory user","service":"omegle-backend","timestamp":"2025-11-16 21:51:51"}
+{"level":"info","message":"User verified for gem@adypu.edu.in (college email domain validated)","service":"omegle-backend","timestamp":"2025-11-16 21:51:51"}
+{"level":"info","message":"User connected: SsiJ_N1SV_1S6d0sAAAD","service":"omegle-backend","timestamp":"2025-11-16 21:51:51"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 21:51:54"}
+{"level":"info","message":"Matching users: User and User","service":"omegle-backend","timestamp":"2025-11-16 21:51:54"}
+{"level":"info","message":"User User (gem@adypu.edu.in) (SsiJ_N1SV_1S6d0sAAAD) joined","service":"omegle-backend","timestamp":"2025-11-16 21:51:54"}
+{"level":"error","message":"Error saving room to database: MongoServerError: E11000 duplicate key error collection: omegle-clone.rooms index: roomId_1 dup key: { roomId: \"1\" }","service":"omegle-backend","timestamp":"2025-11-16 21:51:54"}
+{"level":"info","message":"User connected: Pz03UeH2BkD24UImAAAG","service":"omegle-backend","timestamp":"2025-11-16 21:56:26"}
+{"level":"info","message":"User connected: awuUsah8b83wC4W9AAAH","service":"omegle-backend","timestamp":"2025-11-16 21:56:26"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 21:56:28"}
+{"level":"info","message":"Matching users: User and User","service":"omegle-backend","timestamp":"2025-11-16 21:56:28"}
+{"level":"info","message":"User User (son@adypu.edu.in) (Pz03UeH2BkD24UImAAAG) joined","service":"omegle-backend","timestamp":"2025-11-16 21:56:28"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 21:56:28"}
+{"level":"info","message":"User User (gem@adypu.edu.in) (awuUsah8b83wC4W9AAAH) joined","service":"omegle-backend","timestamp":"2025-11-16 21:56:28"}
+{"level":"error","message":"Error saving room to database: MongoServerError: E11000 duplicate key error collection: omegle-clone.rooms index: roomId_1 dup key: { roomId: \"2\" }","service":"omegle-backend","timestamp":"2025-11-16 21:56:28"}
+{"level":"info","message":"User connected: S0kntMqIKKPCE6-jAAAK","service":"omegle-backend","timestamp":"2025-11-16 21:59:17"}
+{"level":"info","message":"User connected: rlO-ie3QRwCjMgFFAAAL","service":"omegle-backend","timestamp":"2025-11-16 21:59:17"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 21:59:18"}
+{"level":"info","message":"Matching users: User and User","service":"omegle-backend","timestamp":"2025-11-16 21:59:18"}
+{"level":"info","message":"User User (gem@adypu.edu.in) (S0kntMqIKKPCE6-jAAAK) joined","service":"omegle-backend","timestamp":"2025-11-16 21:59:18"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 21:59:18"}
+{"level":"info","message":"User User (son@adypu.edu.in) (rlO-ie3QRwCjMgFFAAAL) joined","service":"omegle-backend","timestamp":"2025-11-16 21:59:18"}
+{"level":"error","message":"Error saving room to database: MongoServerError: E11000 duplicate key error collection: omegle-clone.rooms index: roomId_1 dup key: { roomId: \"3\" }","service":"omegle-backend","timestamp":"2025-11-16 21:59:19"}
+{"level":"info","message":"User connected: lYPJU8TWcM7JiRqZAAAN","service":"omegle-backend","timestamp":"2025-11-16 22:01:32"}
+{"level":"info","message":"User connected: x0JG4kMqu1RBPGpAAAAP","service":"omegle-backend","timestamp":"2025-11-16 22:01:32"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:01:34"}
+{"level":"info","message":"Matching users: User and User","service":"omegle-backend","timestamp":"2025-11-16 22:01:34"}
+{"level":"info","message":"User User (son@adypu.edu.in) (lYPJU8TWcM7JiRqZAAAN) joined","service":"omegle-backend","timestamp":"2025-11-16 22:01:34"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:01:34"}
+{"level":"info","message":"User User (gem@adypu.edu.in) (x0JG4kMqu1RBPGpAAAAP) joined","service":"omegle-backend","timestamp":"2025-11-16 22:01:34"}
+{"level":"error","message":"Error saving room to database: MongoServerError: E11000 duplicate key error collection: omegle-clone.rooms index: roomId_1 dup key: { roomId: \"4\" }","service":"omegle-backend","timestamp":"2025-11-16 22:01:34"}
+{"level":"info","message":"User disconnected: lYPJU8TWcM7JiRqZAAAN","service":"omegle-backend","timestamp":"2025-11-16 22:04:04"}
+{"level":"info","message":"User disconnected: rlO-ie3QRwCjMgFFAAAL","service":"omegle-backend","timestamp":"2025-11-16 22:04:04"}
+{"level":"info","message":"User disconnected: Pz03UeH2BkD24UImAAAG","service":"omegle-backend","timestamp":"2025-11-16 22:04:04"}
+{"level":"info","message":"User disconnected: RtUP51dA8bOH3XB_AAAB","service":"omegle-backend","timestamp":"2025-11-16 22:04:04"}
+{"level":"info","message":"Room 4 deleted","service":"omegle-backend","timestamp":"2025-11-16 22:04:04"}
+{"level":"info","message":"User lYPJU8TWcM7JiRqZAAAN removed","service":"omegle-backend","timestamp":"2025-11-16 22:04:04"}
+{"level":"info","message":"Room 3 deleted","service":"omegle-backend","timestamp":"2025-11-16 22:04:05"}
+{"level":"info","message":"User rlO-ie3QRwCjMgFFAAAL removed","service":"omegle-backend","timestamp":"2025-11-16 22:04:05"}
+{"level":"info","message":"Room 1 deleted","service":"omegle-backend","timestamp":"2025-11-16 22:04:05"}
+{"level":"info","message":"User RtUP51dA8bOH3XB_AAAB removed","service":"omegle-backend","timestamp":"2025-11-16 22:04:05"}
+{"level":"info","message":"Room 2 deleted","service":"omegle-backend","timestamp":"2025-11-16 22:04:05"}
+{"level":"info","message":"User Pz03UeH2BkD24UImAAAG removed","service":"omegle-backend","timestamp":"2025-11-16 22:04:05"}
+{"level":"info","message":"User verified for rem@adypu.edu.in (college email domain validated)","service":"omegle-backend","timestamp":"2025-11-16 22:04:12"}
+{"level":"info","message":"User connected: 3e9NqRvGx97CSO2gAAAR","service":"omegle-backend","timestamp":"2025-11-16 22:04:13"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:04:14"}
+{"level":"info","message":"User User (rem@adypu.edu.in) (3e9NqRvGx97CSO2gAAAR) joined","service":"omegle-backend","timestamp":"2025-11-16 22:04:14"}
+{"level":"info","message":"User verified for rem@adypu.edu.in (college email domain validated)","service":"omegle-backend","timestamp":"2025-11-16 22:04:27"}
+{"level":"info","message":"User connected: g3zJiS0lJrxjBsK1AAAT","service":"omegle-backend","timestamp":"2025-11-16 22:04:28"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:04:28"}
+{"level":"info","message":"Matching users: User and User","service":"omegle-backend","timestamp":"2025-11-16 22:04:28"}
+{"level":"info","message":"User User (rem@adypu.edu.in) (g3zJiS0lJrxjBsK1AAAT) joined","service":"omegle-backend","timestamp":"2025-11-16 22:04:28"}
+{"level":"error","message":"Error saving room to database: MongoServerError: E11000 duplicate key error collection: omegle-clone.rooms index: roomId_1 dup key: { roomId: \"5\" }","service":"omegle-backend","timestamp":"2025-11-16 22:04:28"}
+{"level":"info","message":"User disconnected: g3zJiS0lJrxjBsK1AAAT","service":"omegle-backend","timestamp":"2025-11-16 22:04:38"}
+{"level":"info","message":"Room 5 deleted","service":"omegle-backend","timestamp":"2025-11-16 22:04:38"}
+{"level":"info","message":"User g3zJiS0lJrxjBsK1AAAT removed","service":"omegle-backend","timestamp":"2025-11-16 22:04:38"}
+{"level":"info","message":"User disconnected: 3e9NqRvGx97CSO2gAAAR","service":"omegle-backend","timestamp":"2025-11-16 22:04:43"}
+{"level":"info","message":"User 3e9NqRvGx97CSO2gAAAR removed","service":"omegle-backend","timestamp":"2025-11-16 22:04:43"}
+{"level":"info","message":"User verified for rem@adypu.edu.in (college email domain validated)","service":"omegle-backend","timestamp":"2025-11-16 22:04:53"}
+{"level":"info","message":"User connected: hMMORrZ-71LIFreKAAAV","service":"omegle-backend","timestamp":"2025-11-16 22:04:54"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:04:54"}
+{"level":"info","message":"User User (rem@adypu.edu.in) (hMMORrZ-71LIFreKAAAV) joined","service":"omegle-backend","timestamp":"2025-11-16 22:04:54"}
+{"level":"info","message":"User disconnected: SsiJ_N1SV_1S6d0sAAAD","service":"omegle-backend","timestamp":"2025-11-16 22:04:58"}
+{"level":"info","message":"User SsiJ_N1SV_1S6d0sAAAD removed","service":"omegle-backend","timestamp":"2025-11-16 22:04:58"}
+{"level":"info","message":"User disconnected: awuUsah8b83wC4W9AAAH","service":"omegle-backend","timestamp":"2025-11-16 22:04:58"}
+{"level":"info","message":"User awuUsah8b83wC4W9AAAH removed","service":"omegle-backend","timestamp":"2025-11-16 22:04:58"}
+{"level":"info","message":"User disconnected: S0kntMqIKKPCE6-jAAAK","service":"omegle-backend","timestamp":"2025-11-16 22:04:58"}
+{"level":"info","message":"User S0kntMqIKKPCE6-jAAAK removed","service":"omegle-backend","timestamp":"2025-11-16 22:04:58"}
+{"level":"info","message":"User disconnected: x0JG4kMqu1RBPGpAAAAP","service":"omegle-backend","timestamp":"2025-11-16 22:04:58"}
+{"level":"info","message":"User x0JG4kMqu1RBPGpAAAAP removed","service":"omegle-backend","timestamp":"2025-11-16 22:04:58"}
+{"level":"info","message":"User verified for gem@adypu.edu.in (college email domain validated)","service":"omegle-backend","timestamp":"2025-11-16 22:05:04"}
+{"level":"info","message":"User connected: hmzFHQWvsOBVc0IIAAAX","service":"omegle-backend","timestamp":"2025-11-16 22:05:04"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:05:05"}
+{"level":"info","message":"Matching users: User and User","service":"omegle-backend","timestamp":"2025-11-16 22:05:05"}
+{"level":"info","message":"User User (gem@adypu.edu.in) (hmzFHQWvsOBVc0IIAAAX) joined","service":"omegle-backend","timestamp":"2025-11-16 22:05:05"}
+{"level":"error","message":"Error saving room to database: MongoServerError: E11000 duplicate key error collection: omegle-clone.rooms index: roomId_1 dup key: { roomId: \"6\" }","service":"omegle-backend","timestamp":"2025-11-16 22:05:05"}
+{"level":"info","message":"User disconnected: hMMORrZ-71LIFreKAAAV","service":"omegle-backend","timestamp":"2025-11-16 22:06:17"}
+{"level":"info","message":"User disconnected: hmzFHQWvsOBVc0IIAAAX","service":"omegle-backend","timestamp":"2025-11-16 22:06:17"}
+{"level":"info","message":"User connected: JquoTeespwT6vqaGAAAa","service":"omegle-backend","timestamp":"2025-11-16 22:06:17"}
+{"level":"info","message":"User connected: OuliocDSpaPWN5fHAAAb","service":"omegle-backend","timestamp":"2025-11-16 22:06:17"}
+{"level":"info","message":"Room 6 deleted","service":"omegle-backend","timestamp":"2025-11-16 22:06:18"}
+{"level":"info","message":"User hMMORrZ-71LIFreKAAAV removed","service":"omegle-backend","timestamp":"2025-11-16 22:06:18"}
+{"level":"info","message":"Room 6 deleted","service":"omegle-backend","timestamp":"2025-11-16 22:06:18"}
+{"level":"info","message":"User hmzFHQWvsOBVc0IIAAAX removed","service":"omegle-backend","timestamp":"2025-11-16 22:06:18"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:06:18"}
+{"level":"info","message":"Matching users: User and User","service":"omegle-backend","timestamp":"2025-11-16 22:06:18"}
+{"level":"info","message":"User User (rem@adypu.edu.in) (JquoTeespwT6vqaGAAAa) joined","service":"omegle-backend","timestamp":"2025-11-16 22:06:18"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:06:18"}
+{"level":"info","message":"User User (gem@adypu.edu.in) (OuliocDSpaPWN5fHAAAb) joined","service":"omegle-backend","timestamp":"2025-11-16 22:06:18"}
+{"level":"info","message":"Room 7 created between User and User","service":"omegle-backend","timestamp":"2025-11-16 22:06:18"}
+{"level":"info","message":"User disconnected: JquoTeespwT6vqaGAAAa","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"User disconnected: OuliocDSpaPWN5fHAAAb","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"User connected: 6XutwWt4F_GrBl2TAAAe","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"User connected: XDiOF4uwzkSEVaJBAAAf","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"Room 7 deleted","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"User JquoTeespwT6vqaGAAAa removed","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"Room 7 deleted","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"User OuliocDSpaPWN5fHAAAb removed","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"Matching users: User and User","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"User User (gem@adypu.edu.in) (6XutwWt4F_GrBl2TAAAe) joined","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"User User (rem@adypu.edu.in) (XDiOF4uwzkSEVaJBAAAf) joined","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"Room 8 created between User and User","service":"omegle-backend","timestamp":"2025-11-16 22:08:20"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:20"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:20"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:22"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:22"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:23"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:23"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:24"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:24"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:24"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:24"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:30"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:30"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:31"}
+{"level":"info","message":"SIGINT signal received: closing HTTP server","service":"omegle-backend","timestamp":"2025-11-16 22:11:31"}
+{"level":"info","message":"🚀 Server listening on port 3000","service":"omegle-backend","timestamp":"2025-11-16 22:11:59"}
+{"level":"info","message":"📝 Environment: development","service":"omegle-backend","timestamp":"2025-11-16 22:11:59"}
+{"level":"info","message":"✅ Connected to MongoDB","service":"omegle-backend","timestamp":"2025-11-16 22:12:00"}
+{"level":"info","message":"User connected: l8zESqnB8Cv69_DAAAAB","service":"omegle-backend","timestamp":"2025-11-16 22:12:00"}
+{"level":"info","message":"User connected: cMsMcY_R5vHRVQ1YAAAD","service":"omegle-backend","timestamp":"2025-11-16 22:12:03"}
+{"level":"info","message":"User disconnected: cMsMcY_R5vHRVQ1YAAAD","service":"omegle-backend","timestamp":"2025-11-16 22:12:18"}
+{"level":"info","message":"User cMsMcY_R5vHRVQ1YAAAD removed","service":"omegle-backend","timestamp":"2025-11-16 22:12:18"}
+{"level":"info","message":"User verified for gem@adypu.edu.in (college email domain validated)","service":"omegle-backend","timestamp":"2025-11-16 22:12:26"}
+{"level":"info","message":"User connected: lWd9SsFV5xQ1jaovAAAF","service":"omegle-backend","timestamp":"2025-11-16 22:12:27"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:12:27"}
+{"level":"info","message":"User User (gem@adypu.edu.in) (lWd9SsFV5xQ1jaovAAAF) joined","service":"omegle-backend","timestamp":"2025-11-16 22:12:27"}
+{"level":"info","message":"User disconnected: l8zESqnB8Cv69_DAAAAB","service":"omegle-backend","timestamp":"2025-11-16 22:12:34"}
+{"level":"info","message":"User l8zESqnB8Cv69_DAAAAB removed","service":"omegle-backend","timestamp":"2025-11-16 22:12:34"}
+{"level":"info","message":"User verified for woo@adypu.edu.in (college email domain validated)","service":"omegle-backend","timestamp":"2025-11-16 22:12:42"}
+{"level":"info","message":"User connected: 3Id_FXGA7LoyY3igAAAH","service":"omegle-backend","timestamp":"2025-11-16 22:12:43"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 22:12:43"}
+{"level":"info","message":"Matching users: User and User","service":"omegle-backend","timestamp":"2025-11-16 22:12:43"}
+{"level":"info","message":"User User (woo@adypu.edu.in) (3Id_FXGA7LoyY3igAAAH) joined","service":"omegle-backend","timestamp":"2025-11-16 22:12:43"}
+{"level":"error","message":"Error saving room to database: MongoServerError: E11000 duplicate key error collection: omegle-clone.rooms index: roomId_1 dup key: { roomId: \"1\" }","service":"omegle-backend","timestamp":"2025-11-16 22:12:43"}
+{"level":"info","message":"User disconnected: lWd9SsFV5xQ1jaovAAAF","service":"omegle-backend","timestamp":"2025-11-16 22:17:45"}
+{"level":"info","message":"Room 1 deleted","service":"omegle-backend","timestamp":"2025-11-16 22:17:46"}
+{"level":"info","message":"User lWd9SsFV5xQ1jaovAAAF removed","service":"omegle-backend","timestamp":"2025-11-16 22:17:46"}
+{"level":"info","message":"User disconnected: 3Id_FXGA7LoyY3igAAAH","service":"omegle-backend","timestamp":"2025-11-16 22:17:48"}
+{"level":"info","message":"User 3Id_FXGA7LoyY3igAAAH removed","service":"omegle-backend","timestamp":"2025-11-16 22:17:48"}
+{"level":"warn","message":"⚠️  MongoDB disconnected","service":"omegle-backend","timestamp":"2025-11-16 22:49:07"}
+{"level":"warn","message":"⚠️  MongoDB disconnected","service":"omegle-backend","timestamp":"2025-11-16 23:05:38"}
+{"level":"info","message":"User verified for son@adypu.edu.in (college email domain validated)","service":"omegle-backend","timestamp":"2025-11-16 23:08:00"}
+{"level":"info","message":"User connected: YLH0KWCOgCaYnvAhAAAJ","service":"omegle-backend","timestamp":"2025-11-16 23:08:01"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 23:08:01"}
+{"level":"info","message":"User User (son@adypu.edu.in) (YLH0KWCOgCaYnvAhAAAJ) joined","service":"omegle-backend","timestamp":"2025-11-16 23:08:01"}
+{"level":"info","message":"User verified for gem@adypu.edu.in (college email domain validated)","service":"omegle-backend","timestamp":"2025-11-16 23:08:14"}
+{"level":"info","message":"User connected: sPjTZvMuuyaP4MWWAAAL","service":"omegle-backend","timestamp":"2025-11-16 23:08:15"}
+{"level":"error","message":"Error saving user to database: MongoServerError: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: omegle-clone.users index: email_1 dup key: { email: null }","service":"omegle-backend","timestamp":"2025-11-16 23:08:16"}
+{"level":"info","message":"Matching users: User and User","service":"omegle-backend","timestamp":"2025-11-16 23:08:16"}
+{"level":"info","message":"User User (gem@adypu.edu.in) (sPjTZvMuuyaP4MWWAAAL) joined","service":"omegle-backend","timestamp":"2025-11-16 23:08:16"}
+{"level":"error","message":"Error saving room to database: MongoServerError: E11000 duplicate key error collection: omegle-clone.rooms index: roomId_1 dup key: { roomId: \"2\" }","service":"omegle-backend","timestamp":"2025-11-16 23:08:16"}
+{"level":"info","message":"User disconnected: YLH0KWCOgCaYnvAhAAAJ","service":"omegle-backend","timestamp":"2025-11-16 23:09:20"}
+{"level":"info","message":"Room 2 deleted","service":"omegle-backend","timestamp":"2025-11-16 23:09:21"}
+{"level":"info","message":"User YLH0KWCOgCaYnvAhAAAJ removed","service":"omegle-backend","timestamp":"2025-11-16 23:09:21"}
+{"level":"info","message":"User disconnected: sPjTZvMuuyaP4MWWAAAL","service":"omegle-backend","timestamp":"2025-11-16 23:09:23"}
+{"level":"info","message":"User sPjTZvMuuyaP4MWWAAAL removed","service":"omegle-backend","timestamp":"2025-11-16 23:09:23"}

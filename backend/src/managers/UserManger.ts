@@ -155,6 +155,14 @@ export class UserManager {
             }
         });
 
+        socket.on("chat-message", ({ roomId, message }: { roomId?: string, message: string }) => {
+            const resolvedRoomId = roomId || this.roomManager.getRoomBySocketId(socket.id);
+            if (!resolvedRoomId) {
+                return;
+            }
+            this.roomManager.forwardChatMessage(resolvedRoomId, socket.id, message);
+        });
+
         socket.on("disconnect-room", async () => {
             const roomId = this.roomManager.getRoomBySocketId(socket.id);
             if (roomId) {

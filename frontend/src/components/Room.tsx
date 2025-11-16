@@ -6,6 +6,14 @@ import { Socket, io } from "socket.io-client";
 const BACKEND_HOST = (import.meta as any).env?.VITE_BACKEND_URL || window.location.hostname;
 const URL = BACKEND_HOST.startsWith('http') ? BACKEND_HOST : `http://${BACKEND_HOST}:3000`;
 
+type ChatMessage = {
+    id: string;
+    text: string;
+    sender: 'me' | 'peer';
+    senderName: string;
+    timestamp: string;
+};
+
 export const Room = ({
     name,
     email,
@@ -24,6 +32,9 @@ export const Room = ({
     const [currentRoomId, setCurrentRoomId] = useState<string | null>(null);
     const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
     const localVideoRef = useRef<HTMLVideoElement | null>(null);
+    const chatBottomRef = useRef<HTMLDivElement | null>(null);
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [chatInput, setChatInput] = useState('');
 
     const handleRemoteTrack = (event: RTCTrackEvent) => {
         const videoElement = remoteVideoRef.current;
@@ -65,6 +76,19 @@ export const Room = ({
         socket.on('user-disconnected', () => {
             setLobby(true);
             alert('The other user disconnected. Searching for a new match...');
+        });
+
+        socket.on("chat-message", ({ roomId: incomingRoomId, message, senderName, timestamp }: { roomId: string, message: string, senderName: string, timestamp: string }) => {
+            setMessages(prev => ([
+                ...prev,
+                {
+                    id: `${incomingRoomId}-${Date.now()}`,
+                    text: message,
+                    sender: 'peer',
+                    senderName: senderName || 'Stranger',
+                    timestamp: timestamp || new Date().toISOString()
+                }
+            ]));
         });
         
         socket.on('send-offer', async ({roomId}) => {
@@ -149,7 +173,7 @@ export const Room = ({
             });
         });
 
-        socket.on("answer", ({roomId, sdp: remoteSdp}) => {
+        socket.on("answer", ({ sdp: remoteSdp }) => {
             setLobby(false);
             setSendingPc(pc => {
                 pc?.setRemoteDescription(remoteSdp)
@@ -185,6 +209,10 @@ export const Room = ({
         })
 
         setSocket(socket)
+
+        return () => {
+            socket.disconnect();
+        }
     }, [name])
 
     useEffect(() => {
@@ -197,6 +225,16 @@ export const Room = ({
             }
         });
     }, [localVideoTrack])
+
+    useEffect(() => {
+        chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
+
+    useEffect(() => {
+        if (lobby) {
+            setMessages([]);
+        }
+    }, [lobby]);
 
     const handleDisconnect = () => {
         if (socket && currentRoomId) {
@@ -224,72 +262,123 @@ export const Room = ({
         }
     };
 
-    const videoStyle: React.CSSProperties = {
-        width: '100%',
-        maxWidth: '420px',
-        aspectRatio: '4 / 3',
-        border: '2px solid #333',
-        borderRadius: '12px',
-        backgroundColor: '#000',
-        objectFit: 'cover',
-        boxShadow: '0 8px 20px rgba(0,0,0,0.25)'
+    const handleSendMessage = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (!socket || !currentRoomId) return;
+        const text = chatInput.trim();
+        if (!text) return;
+
+        const newMessage: ChatMessage = {
+            id: `${currentRoomId}-${Date.now()}`,
+            text,
+            sender: 'me',
+            senderName: name,
+            timestamp: new Date().toISOString()
+        };
+
+        setMessages(prev => [...prev, newMessage]);
+        socket.emit('chat-message', { roomId: currentRoomId, message: text });
+        setChatInput('');
     };
 
-    return <div style={{ padding: '20px', textAlign: 'center' }}>
-        <h2>Hi {name}!</h2>
-        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <div>
-                <h3>You</h3>
-                <video 
-                    autoPlay 
-                    playsInline
-                    ref={localVideoRef}
-                    style={videoStyle}
-                    muted
-                />
-            </div>
-            <div>
-                <h3>{lobby ? 'Waiting for match...' : 'Connected'}</h3>
-                <video 
-                    autoPlay 
-                    playsInline
-                    ref={remoteVideoRef}
-                    style={videoStyle}
-                />
+    const roomStateClasses = lobby ? '' : 'room-connected';
+
+    return (
+        <div className={`room-container ${roomStateClasses}`}>
+            <div className="background-glow" />
+            <div className={`room-shell ${roomStateClasses}`}>
+                <div className="room-header">
+                    <div>
+                        <p className="tagline">Signed in as {name}</p>
+                        <h2>Campus Connect</h2>
+                    </div>
+                    <span className={`status-pill ${lobby ? 'waiting' : 'connected'}`}>
+                        {lobby ? 'Searching for a match…' : 'You are live'}
+                    </span>
+                </div>
+
+                <div className="room-layout">
+                    <div className="video-stack">
+                        <div className="video-card remote-card">
+                            <div className="video-meta">
+                                <h3>{lobby ? 'Searching for a match…' : 'Stranger'}</h3>
+                                <span>{lobby ? 'Hang tight, we are pairing you.' : 'You are connected'}</span>
+                            </div>
+                            <video 
+                                autoPlay 
+                                playsInline
+                                ref={remoteVideoRef}
+                                className="video-frame remote-frame"
+                            />
+                            <div className="pip-card">
+                                <span>You</span>
+                                <video 
+                                    autoPlay 
+                                    playsInline
+                                    ref={localVideoRef}
+                                    className="video-frame pip-frame"
+                                    muted
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="chat-column">
+                        <div className="chat-panel">
+                            <div className="chat-header">
+                                <h4>Live chat</h4>
+                                <span>{lobby ? 'Matching in progress…' : 'Say hi 👋'}</span>
+                            </div>
+                            <div className="chat-messages">
+                                {messages.length === 0 && (
+                                    <p className="chat-empty">Keep chatting while the video stays live.</p>
+                                )}
+                                {messages.map(message => (
+                                    <div
+                                        key={message.id}
+                                        className={`chat-message ${message.sender === 'me' ? 'self' : 'peer'}`}
+                                    >
+                                        <span className="chat-author">{message.sender === 'me' ? 'You' : message.senderName}</span>
+                                        <p>{message.text}</p>
+                                    </div>
+                                ))}
+                                <div ref={chatBottomRef} />
+                            </div>
+                            <form className="chat-input-row" onSubmit={handleSendMessage}>
+                                <input
+                                    type="text"
+                                    value={chatInput}
+                                    onChange={(e) => setChatInput(e.target.value)}
+                                    placeholder={lobby ? 'Chat unlocks once connected…' : 'Type a message'}
+                                    className="input-field"
+                                />
+                                <button
+                                    type="submit"
+                                    className="btn primary"
+                                    disabled={lobby || !chatInput.trim()}
+                                >
+                                    Send
+                                </button>
+                            </form>
+                        </div>
+                        <div className="controls chat-controls">
+                            <button 
+                                onClick={handleReport}
+                                className="btn ghost"
+                                disabled={lobby}
+                            >
+                                Report
+                            </button>
+                            <button 
+                                onClick={handleDisconnect}
+                                className={`btn ${lobby ? 'secondary' : 'danger'}`}
+                            >
+                                {lobby ? 'Cancel Search' : 'Disconnect'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        {!lobby && (
-            <div style={{ marginTop: '20px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
-                <button 
-                    onClick={handleDisconnect}
-                    style={{ 
-                        padding: '10px 20px', 
-                        fontSize: '16px', 
-                        backgroundColor: '#ff4444', 
-                        color: 'white', 
-                        border: 'none', 
-                        borderRadius: '5px',
-                        cursor: 'pointer'
-                    }}
-                >
-                    Disconnect
-                </button>
-                <button 
-                    onClick={handleReport}
-                    style={{ 
-                        padding: '10px 20px', 
-                        fontSize: '16px', 
-                        backgroundColor: '#ff8800', 
-                        color: 'white', 
-                        border: 'none', 
-                        borderRadius: '5px',
-                        cursor: 'pointer'
-                    }}
-                >
-                    Report
-                </button>
-            </div>
-        )}
-    </div>
+    )
 }
 

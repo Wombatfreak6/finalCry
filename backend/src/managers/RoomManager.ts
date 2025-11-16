@@ -142,6 +142,33 @@ export class RoomManager {
         }
     }
 
+    forwardChatMessage(roomId: string, senderSocketId: string, message: string) {
+        const trimmed = message?.trim();
+        if (!trimmed) {
+            return;
+        }
+
+        const room = this.rooms.get(roomId);
+        if (!room) {
+            logger.warn(`Room ${roomId} not found for chat message`);
+            return;
+        }
+
+        const sender = room.user1.socket.id === senderSocketId ? room.user1 : room.user2;
+        const recipient = sender.socket.id === room.user1.socket.id ? room.user2 : room.user1;
+
+        if (!recipient || !recipient.socket.connected) {
+            return;
+        }
+
+        recipient.socket.emit("chat-message", {
+            roomId,
+            message: trimmed,
+            senderName: sender?.name || 'Stranger',
+            timestamp: new Date().toISOString()
+        });
+    }
+
     generate() {
         return GLOBAL_ROOM_ID++;
     }
