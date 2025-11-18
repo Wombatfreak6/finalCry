@@ -165,12 +165,29 @@ export class UserManager {
 
         socket.on("disconnect-room", async () => {
             const roomId = this.roomManager.getRoomBySocketId(socket.id);
-            if (roomId) {
-                await this.roomManager.deleteRoom(roomId);
-                socket.emit("lobby");
-                this.queue.push(socket.id);
-                this.clearQueue();
+            if (!roomId) {
+                return;
             }
+
+            const participants = this.roomManager.getRoomParticipants(roomId);
+            await this.roomManager.deleteRoom(roomId);
+
+            socket.emit("lobby");
+            this.queue.push(socket.id);
+
+            if (participants) {
+                const otherUser = participants.user1.socket.id === socket.id
+                    ? participants.user2
+                    : participants.user1;
+
+                if (otherUser?.socket.connected) {
+                    otherUser.socket.emit("user-disconnected");
+                    otherUser.socket.emit("lobby");
+                    this.queue.push(otherUser.socket.id);
+                }
+            }
+
+            this.clearQueue();
         });
     }
 

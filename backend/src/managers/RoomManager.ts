@@ -79,6 +79,14 @@ export class RoomManager {
         return null;
     }
 
+    getRoomParticipants(roomId: string): RoomData | null {
+        const room = this.rooms.get(roomId);
+        if (!room) {
+            return null;
+        }
+        return room;
+    }
+
     async reportRoom(roomId: string, reporterSocketId: string) {
         const room = this.rooms.get(roomId);
         if (!room) {
