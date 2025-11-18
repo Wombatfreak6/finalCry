@@ -151,110 +151,178 @@ export const Landing = () => {
         setJoined(true);
     };
 
+    const handleLeaveRoom = () => {
+        setJoined(false);
+    };
+
     if (!joined) {
         return (
             <div className="landing-screen">
                 <div className="background-glow" />
-                <div className="landing-card">
-                    <div className="landing-header">
-                        <p className="tagline">campus-only vibes</p>
-                        <h1>College Omegle</h1>
-                        <p className="subhead">Meet students in seconds. Safe, real, instantly matched.</p>
-                    </div>
-
-                    <div className="preview-panel">
-                        <span className="preview-label">Live preview</span>
-                        <div className="neon-outline preview-video">
-                            <video 
-                                autoPlay 
-                                ref={videoRef}
-                                className="video-frame"
-                                muted
-                            ></video>
+                <header className="landing-nav">
+                    <div className="brand">
+                        <div className="logo-mark">NST</div>
+                        <div>
+                            <p className="brand-label">Newton School of Technology</p>
+                            <span className="brand-sub">Campus Connect</span>
                         </div>
                     </div>
+                    <nav className="nav-links">
+                        <a href="#community">Community</a>
+                        <a href="#events">Events</a>
+                        <a href="#safety">Safety</a>
+                    </nav>
+                    <button className="btn primary nav-cta">
+                        Launch App
+                    </button>
+                </header>
 
-                    {error && (
-                        <div className="alert">
-                            {error}
-                        </div>
-                    )}
+                <section className="landing-hero">
+                    <div className="hero-content">
+                        <p className="tagline">Newton network</p>
+                        <h1>Meet blue-badged students in seconds.</h1>
+                        <p className="subhead">
+                            Jump into spontaneous video conversations with learners across the Newton School ecosystem.
+                            Every profile is email-verified for a trusted, campus-only vibe.
+                        </p>
 
-                    {step === 'email' && (
-                        <div className="form-section">
-                            <label className="field-label">
-                                Enter your college email
-                            </label>
-                            <input 
-                                type="email" 
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="your.email@university.edu"
-                                className="input-field"
-                                onKeyPress={(e) => {
-                                    if (e.key === 'Enter' && email.trim()) {
-                                        verifyEmail();
-                                    }
-                                }}
-                            />
-                            <p className="helper-text">
-                                Only .edu, .edu.in, .ac.uk, .ac.in domains are accepted.
-                                For testing, you can use test@test.test
-                            </p>
-                            <button 
-                                onClick={verifyEmail}
-                                disabled={!email.trim() || loading}
-                                className="btn primary"
-                            >
-                                {loading ? 'Verifying...' : 'Continue'}
-                            </button>
-                        </div>
-                    )}
-
-                    {step === 'name' && (
-                        <div className="form-section">
-                            <p style={{ color: '#4ade80', fontWeight: 600 }}>
-                                ✓ Email verified: {verifiedEmail}
-                            </p>
-                            <label className="field-label">
-                                Enter your name
-                            </label>
-                            <input 
-                                type="text" 
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                placeholder="Your name"
-                                className="input-field"
-                                onKeyPress={(e) => {
-                                    if (e.key === 'Enter' && name.trim()) {
-                                        handleStartChatting();
-                                    }
-                                }}
-                            />
-                            <div className="actions-row">
-                                <button 
-                                    onClick={() => {
-                                        setStep('email');
-                                        setError('');
-                                    }}
-                                    className="btn secondary"
-                                >
-                                    Back
-                                </button>
-                                <button 
-                                    onClick={handleStartChatting}
-                                    disabled={!name.trim()}
-                                    className="btn primary"
-                                >
-                                    Start Chatting
-                                </button>
+                        <div className="hero-stats">
+                            <div className="stat-pill">
+                                <span className="stat-value">1200+</span>
+                                <span className="stat-label">Active peers</span>
+                            </div>
+                            <div className="stat-pill">
+                                <span className="stat-value">24/7</span>
+                                <span className="stat-label">Matching</span>
+                            </div>
+                            <div className="stat-pill">
+                                <span className="stat-value"><span role="img" aria-label="shield">🛡️</span> Safe</span>
+                                <span className="stat-label">Real identities</span>
                             </div>
                         </div>
-                    )}
-                </div>
+
+                        <div className="hero-benefits">
+                            <div className="benefit">
+                                <span className="benefit-icon">✨</span>
+                                <div>
+                                    <p className="benefit-title">Smart matchmaking</p>
+                                    <p className="benefit-copy">Optimized for relevant interests & timezones.</p>
+                                </div>
+                            </div>
+                            <div className="benefit">
+                                <span className="benefit-icon">🔐</span>
+                                <div>
+                                    <p className="benefit-title">Secure & moderated</p>
+                                    <p className="benefit-copy">Newton community guidelines built-in.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="hero-panel">
+                        <div className="panel-card preview-panel">
+                            <span className="preview-label">Live preview</span>
+                            <div className="preview-video">
+                                <video
+                                    autoPlay
+                                    ref={videoRef}
+                                    className="video-frame mirror"
+                                    muted
+                                ></video>
+                            </div>
+                        </div>
+
+                        <div className="panel-card form-wrapper">
+                            {error && (
+                                <div className="alert">
+                                    {error}
+                                </div>
+                            )}
+
+                            {step === 'email' && (
+                                <div className="form-section">
+                                    <label className="field-label">
+                                        Enter your Newton email
+                                    </label>
+                                    <input
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="you@newtonschool.edu"
+                                        className="input-field"
+                                        onKeyPress={(e) => {
+                                            if (e.key === 'Enter' && email.trim()) {
+                                                verifyEmail();
+                                            }
+                                        }}
+                                    />
+                                    <p className="helper-text">
+                                        Only verified Newton domains are accepted. For testing, use test@test.test
+                                    </p>
+                                    <button
+                                        onClick={verifyEmail}
+                                        disabled={!email.trim() || loading}
+                                        className="btn primary"
+                                    >
+                                        {loading ? 'Verifying…' : 'Continue'}
+                                    </button>
+                                </div>
+                            )}
+
+                            {step === 'name' && (
+                                <div className="form-section">
+                                    <p className="verified-pill">
+                                        ✓ Email verified: {verifiedEmail}
+                                    </p>
+                                    <label className="field-label">
+                                        Enter your name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        placeholder="Your name"
+                                        className="input-field"
+                                        onKeyPress={(e) => {
+                                            if (e.key === 'Enter' && name.trim()) {
+                                                handleStartChatting();
+                                            }
+                                        }}
+                                    />
+                                    <div className="actions-row">
+                                        <button
+                                            onClick={() => {
+                                                setStep('email');
+                                                setError('');
+                                            }}
+                                            className="btn secondary"
+                                        >
+                                            Back
+                                        </button>
+                                        <button
+                                            onClick={handleStartChatting}
+                                            disabled={!name.trim()}
+                                            className="btn primary"
+                                        >
+                                            Start Chatting
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </section>
             </div>
         )
     }
 
-    return <Room name={name} email={verifiedEmail || ''} localAudioTrack={localAudioTrack} localVideoTrack={localVideoTrack} />
+    return (
+        <Room 
+            name={name} 
+            email={verifiedEmail || ''} 
+            localAudioTrack={localAudioTrack} 
+            localVideoTrack={localVideoTrack}
+            onLeave={handleLeaveRoom}
+        />
+    )
 }

@@ -18,12 +18,14 @@ export const Room = ({
     name,
     email,
     localAudioTrack,
-    localVideoTrack
+    localVideoTrack,
+    onLeave
 }: {
     name: string,
     email: string,
     localAudioTrack: MediaStreamTrack | null,
     localVideoTrack: MediaStreamTrack | null,
+    onLeave: () => void,
 }) => {
     const [lobby, setLobby] = useState(true);
     const [socket, setSocket] = useState<null | Socket>(null);
@@ -241,6 +243,11 @@ export const Room = ({
             socket.emit('disconnect-room');
             setLobby(true);
             setCurrentRoomId(null);
+            setMessages([]);
+            setChatInput('');
+            if (remoteVideoRef.current) {
+                remoteVideoRef.current.srcObject = null;
+            }
             // Clean up peer connections
             if (sendingPc) {
                 sendingPc.close();
@@ -251,6 +258,26 @@ export const Room = ({
                 setReceivingPc(null);
             }
         }
+    };
+
+    const handleCancelSearch = () => {
+        if (sendingPc) {
+            sendingPc.close();
+            setSendingPc(null);
+        }
+        if (receivingPc) {
+            receivingPc.close();
+            setReceivingPc(null);
+        }
+        setMessages([]);
+        setChatInput('');
+        setCurrentRoomId(null);
+        setLobby(true);
+        if (socket) {
+            socket.disconnect();
+            setSocket(null);
+        }
+        onLeave();
     };
 
     const handleReport = () => {
@@ -290,7 +317,7 @@ export const Room = ({
                 <div className="room-header">
                     <div>
                         <p className="tagline">Signed in as {name}</p>
-                        <h2>Campus Connect</h2>
+                        <h2>NST Network</h2>
                     </div>
                     <span className={`status-pill ${lobby ? 'waiting' : 'connected'}`}>
                         {lobby ? 'Searching for a match…' : 'You are live'}
@@ -310,16 +337,6 @@ export const Room = ({
                                 ref={remoteVideoRef}
                                 className="video-frame remote-frame"
                             />
-                            <div className="pip-card">
-                                <span>You</span>
-                                <video 
-                                    autoPlay 
-                                    playsInline
-                                    ref={localVideoRef}
-                                    className="video-frame pip-frame"
-                                    muted
-                                />
-                            </div>
                         </div>
                     </div>
                     <div className="chat-column">
@@ -369,11 +386,24 @@ export const Room = ({
                                 Report
                             </button>
                             <button 
-                                onClick={handleDisconnect}
+                                onClick={lobby ? handleCancelSearch : handleDisconnect}
                                 className={`btn ${lobby ? 'secondary' : 'danger'}`}
                             >
-                                {lobby ? 'Cancel Search' : 'Disconnect'}
+                                {lobby ? 'Cancel Search' : 'Skip'}
                             </button>
+                        </div>
+                        <div className="video-card self-card">
+                            <div className="video-meta">
+                                <h3>You</h3>
+                                <span>{lobby ? 'Camera preview' : 'Live now'}</span>
+                            </div>
+                            <video
+                                autoPlay
+                                playsInline
+                                ref={localVideoRef}
+                                className="video-frame self-frame mirror"
+                                muted
+                            />
                         </div>
                     </div>
                 </div>
