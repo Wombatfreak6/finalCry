@@ -320,7 +320,7 @@ export const Room = ({
                         <h2>NST Network</h2>
                     </div>
                     <span className={`status-pill ${lobby ? 'waiting' : 'connected'}`}>
-                        {lobby ? 'Searching for a match…' : 'You are live'}
+                        {'Points: 128 [to be added]'}
                     </span>
                 </div>
 
@@ -343,7 +343,7 @@ export const Room = ({
                         <div className="chat-panel">
                             <div className="chat-header">
                                 <h4>Live chat</h4>
-                                <span>{lobby ? 'Matching in progress…' : 'Say hi 👋'}</span>
+                                
                             </div>
                             <div className="chat-messages">
                                 {messages.length === 0 && (

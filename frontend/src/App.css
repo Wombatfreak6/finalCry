@@ -132,14 +132,14 @@ body.room-active {
   display: flex;
   align-items: stretch;
   justify-content: center;
-  background: linear-gradient(145deg, rgba(239, 246, 255, 0.9), rgba(245, 247, 255, 0.8));
+  background: #ffffff;
 }
 
 .room-shell {
   width: 100%;
   max-width: none;
   height: 100vh;
-  background: var(--bg-card);
+  background: #ffffff;
   border: none;
   border-radius: 0;
   padding: clamp(16px, 3vw, 32px);
@@ -425,10 +425,14 @@ body.room-active {
 .room-header {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-end;
+  justify-content: flex-start;
   gap: 16px;
   margin-bottom: 32px;
+}
+
+.room-header .status-pill {
+  margin-left: auto;
 }
 
 .status-pill {
@@ -493,7 +497,7 @@ body.room-active {
 
 .room-layout {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(320px, 420px);
+  grid-template-columns: minmax(0, 2.8fr) minmax(300px, 360px);
   gap: 32px;
   flex: 1;
   min-height: 0;
