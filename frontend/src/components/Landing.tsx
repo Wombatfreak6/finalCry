@@ -14,10 +14,15 @@ export const Landing = () => {
     const [localVideoTrack, setlocalVideoTrack] = useState<MediaStreamTrack | null>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
+    
+    // Dashboard Refs
+    const remoteVideoRef = useRef<HTMLVideoElement>(null); 
+    const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
 
-useEffect(() => {
-    document.body.className = theme === 'dark' ? 'dark-mode' : '';
-}, [theme]);
+    useEffect(() => {
+        document.body.className = theme === 'dark' ? 'dark-mode' : '';
+    }, [theme]);
+    
     const [joined, setJoined] = useState(false);
 
     const getCam = async () => {
@@ -159,6 +164,9 @@ useEffect(() => {
         setJoined(false);
     };
 
+    // =========================================================================
+    // 1. LANDING PAGE (UNCHANGED)
+    // =========================================================================
     if (!joined) {
         return (
             <div className="landing-screen">
@@ -345,13 +353,111 @@ useEffect(() => {
         )
     }
 
+    // =========================================================================
+    // 2. CHATTING DASHBOARD (Joined = true)
+    // =========================================================================
     return (
-        <Room 
-            name={name} 
-            email={verifiedEmail || ''} 
-            localAudioTrack={localAudioTrack} 
-            localVideoTrack={localVideoTrack}
-            onLeave={handleLeaveRoom}
-        />
-    )
+        <div className="insta-dashboard">
+            {/* --- LEFT SIDEBAR --- */}
+            <nav className="left-nav">
+                <div className="nav-brand">
+                    <div className="nst-logo-icon">NST</div>
+                    <span className="brand-text">Newton Network</span>
+                </div>
+
+                <div className="nav-menu">
+                    <div className="nav-section-title">Social</div>
+                    <a href="#" className="nav-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        <span className="nav-label">Friends (3)</span>
+                    </a>
+                    <a href="#" className="nav-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <span className="nav-label">Last Met</span>
+                    </a>
+                    
+                    {/* COMPLETE MESSAGES ICON */}
+                    <a href="#" className="nav-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                        </svg>
+                        <span className="nav-label">Messages</span>
+                    </a>
+                </div>
+            </nav>
+
+            {/* --- CENTER STAGE --- */}
+            <main className="center-stage">
+                <header className="center-header-area">
+                    <span className="signed-in-badge">SIGNED IN AS {name.toUpperCase()}</span>
+                    <h1 className="center-header-title">NST Network</h1>
+                </header>
+
+                <div className="video-stage-flex-container">
+                    {remoteStream ? (
+                        <video ref={remoteVideoRef} autoPlay playsInline className="remote-video-full" />
+                    ) : (
+                        <div className="loading-state-wrapper">
+                            <div className="spinner"></div>
+                            <p>Scanning for students...</p>
+                            <button className="btn secondary" onClick={() => setRemoteStream(new MediaStream())} style={{fontSize:'0.8rem', marginTop:10}}>
+                                (Debug: Simulate Match)
+                            </button>
+                        </div>
+                    )}
+                </div>
+
+                <div className="bottom-controls">
+                    <button className="control-btn btn-report">Report</button>
+                    
+                    {/* NEW BUTTON */}
+                    <button className="control-btn btn-friend" onClick={() => alert("Friend Request Sent!")}>
+                        Add Friend +
+                    </button>
+
+                    <button className="control-btn btn-skip" onClick={() => setRemoteStream(null)}>
+                        Skip Person →
+                    </button>
+                </div>
+            </main>
+
+            {/* --- RIGHT PANEL --- */}
+            <aside className="right-panel">
+                <div className="top-right-actions">
+                    <button className="login-btn" onClick={() => setJoined(false)}>Logout</button>
+                </div>
+
+                <div className="sidebar-points-area">
+                    <span className="points-pill-green">Points: 128 [Beta]</span>
+                </div>
+
+                <div className="right-chat-box">
+                    <div className="chat-scroll">
+                        <div style={{color:'var(--text-muted)', fontSize:'0.9rem', textAlign:'center', marginTop:20}}>Start a conversation...</div>
+                    </div>
+                    
+                    {/* SEND BUTTON with Icon */}
+                    <div className="chat-input-bar">
+                        <input 
+                            type="text" 
+                            className="input-field-chat" 
+                            placeholder="Type your message..." 
+                        />
+                        <button className="btn primary">
+                            <span>Send</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="local-cam-box">
+                    <video ref={videoRef} autoPlay playsInline muted className="local-video-feed" />
+                    <span className="cam-label">YOU</span>
+                </div>
+            </aside>
+        </div>
+    );
 }
